@@ -9,26 +9,44 @@ document.addEventListener('DOMContentLoaded', async () => {
     const searchInput = document.getElementById('searchInput');
     const productsListContainer = document.getElementById('productsListContainer');
     
-    const ADMIN_PASS = 'admin123';
     let isEditing = false;
 
-    // --- LOGIN LOGIC ---
-    if (sessionStorage.getItem('brokerAdminAuth') === 'true') {
+    // --- AUTH LOGIC (Supabase Auth) ---
+    
+    // Verificar si ya hay una sesión activa
+    const checkSession = async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+            showAdminPanel();
+        }
+    };
+
+    const showAdminPanel = () => {
         loginScreen.style.display = 'none';
         adminPanel.style.display = 'block';
         initAdmin();
-    }
+    };
 
-    loginForm.addEventListener('submit', (e) => {
+    await checkSession();
+
+    loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const pass = document.getElementById('adminPassword').value;
-        if (pass === ADMIN_PASS) {
-            sessionStorage.setItem('brokerAdminAuth', 'true');
-            loginScreen.style.display = 'none';
-            adminPanel.style.display = 'block';
-            initAdmin();
-        } else {
-            alert('Contraseña incorrecta');
+        const email = document.getElementById('adminEmail').value;
+        const password = document.getElementById('adminPassword').value;
+
+        try {
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
+
+            if (error) throw error;
+
+            showToast('Sesión iniciada con éxito', 'success');
+            showAdminPanel();
+        } catch (err) {
+            console.error('Login error:', err);
+            alert('Error al iniciar sesión: ' + err.message);
         }
     });
 
@@ -70,7 +88,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         showToast(`Imagen ${i} subida con éxito.`);
                     } catch (err) {
                         console.error('Upload error:', err);
-                        alert('Error al subir imagen a Supabase Storage: ' + err.message);
+                        alert('Error al subir imagen: ' + err.message);
                     }
                 });
             }
@@ -110,7 +128,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         };
 
         try {
-            showToast('Guardando en Supabase...', 'success');
+            showToast('Guardando...', 'success');
             const { error } = await supabase
                 .from('products')
                 .upsert([productData]);
@@ -126,7 +144,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             updateCount();
         } catch (err) {
             console.error('Error al guardar:', err);
-            alert('Error al guardar en base de datos: ' + err.message);
+            alert('Error de base de datos: ' + err.message + '\n\nAsegúrate de que tienes permisos de escritura.');
         }
     });
 
@@ -212,7 +230,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 updateCount();
             } catch (err) {
                 console.error('Error al eliminar:', err);
-                alert('Error al eliminar de Supabase: ' + err.message);
+                alert('Error al eliminar: ' + err.message);
             }
         }
     };
