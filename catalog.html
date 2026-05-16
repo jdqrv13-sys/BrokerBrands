@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo | Broker Brands - Tecnología de Calidad en Caracas</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .catalog-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: var(--spacing-xl);
+        }
+
+        .sidebar {
+            background-color: var(--gray-50);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--gray-200);
+            height: fit-content;
+        }
+
+        .filter-section {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .filter-title {
+            font-size: 0.875rem;
+            color: var(--navy);
+            margin-bottom: var(--spacing-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .filter-link {
+            display: block;
+            padding: 0.5rem 0;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .filter-link:hover {
+            color: var(--electric-orange);
+            padding-left: 0.25rem;
+        }
+
+        @media (max-width: 992px) {
+            .catalog-layout {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none; /* Mobile filters can be implemented as a modal later */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container nav">
+            <a href="index.html" class="logo-link">
+                <img src="assets/logo.jpg" alt="Broker Brands Logo" class="logo-img">
+                <span class="logo-text">BROKER BRANDS</span>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Inicio</a>
+                <a href="catalog.html" class="nav-link active">Catálogo</a>
+                <a href="index.html#soluciones" class="nav-link">Soluciones B2B</a>
+                <a href="index.html#contacto" class="nav-link">Contacto</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="cart.html" class="btn btn-header" style="padding: 0.5rem 1rem;">
+                    <i class="fas fa-shopping-cart"></i> Carrito (<span class="cart-badge">0</span>)
+                </a>
+                <button class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="container">
+            <div style="margin-bottom: var(--spacing-xl);">
+                <span id="current-category" style="color: var(--electric-orange); font-weight: 600; text-transform: uppercase; font-size: 0.75rem;">Todos los productos</span>
+                <h1 style="font-size: 2.25rem;">Nuestro Catálogo</h1>
+                <p style="color: var(--gray-500);"><span id="product-count">0</span> productos encontrados</p>
+            </div>
+
+            <div class="catalog-layout">
+                <aside class="sidebar">
+                    <div class="filter-section">
+                        <h4 class="filter-title">Categorías</h4>
+                        <a href="catalog.html" class="filter-link" data-category="all">Todos</a>
+                        <a href="catalog.html" class="filter-link" data-category="Computación">Computación</a>
+                        <a href="catalog.html" class="filter-link" data-category="Visualización">Visualización</a>
+                        <a href="catalog.html" class="filter-link" data-category="Impresión">Impresión</a>
+                        <a href="catalog.html" class="filter-link" data-category="Accesorios">Accesorios</a>
+                        <a href="catalog.html" class="filter-link" data-category="Audio">Audio</a>
+                        <a href="catalog.html" class="filter-link" data-category="Redes">Redes</a>
+                        <a href="catalog.html" class="filter-link" data-category="Energía">Energía</a>
+                    </div>
+                    <div class="filter-section">
+                        <h4 class="filter-title">Precio Máximo (USD)</h4>
+                        <input type="range" id="max-price" min="0" max="2000" step="50" value="2000" style="width: 100%;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-top: 0.5rem;">
+                            <span>$0</span>
+                            <span>$2,000+</span>
+                        </div>
+                    </div>
+                </aside>
+
+                <div id="catalog-grid" class="grid-products">
+                    <!-- Products will be rendered here by catalog.js -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div style="text-align: center; color: var(--gray-500); font-size: 0.75rem;">
+                &copy; 2026 Broker Brands C.A. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/catalog.js"></script>
+</body>
+</html>

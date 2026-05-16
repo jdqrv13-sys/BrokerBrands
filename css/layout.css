@@ -1,0 +1,208 @@
+/* --- LAYOUT --- */
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+.header {
+    background-color: var(--navy);
+    color: var(--white);
+    padding: var(--spacing-md) 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-md);
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.logo-img {
+    height: 40px;
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.nav-links {
+    display: flex;
+    gap: var(--spacing-xl);
+}
+
+.nav-link {
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--gray-300);
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--white);
+}
+
+.hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #2A3F54 100%);
+    color: var(--white);
+    padding: var(--spacing-2xl) 0;
+    text-align: center;
+}
+
+.section {
+    padding: var(--spacing-2xl) 0;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    font-size: 1.875rem;
+}
+
+.grid-products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-xl);
+}
+
+.grid-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.category-tile {
+    background-color: var(--gray-50);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    border: 1px solid var(--gray-200);
+    transition: var(--transition-base);
+}
+
+.category-tile:hover {
+    background-color: var(--white);
+    border-color: var(--electric-orange);
+    box-shadow: var(--shadow-md);
+}
+
+.footer {
+    background-color: var(--gray-900);
+    color: var(--white);
+    padding: var(--spacing-2xl) 0;
+    margin-top: var(--spacing-2xl);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-2xl);
+}
+
+.footer-heading {
+    color: var(--white);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.125rem;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.footer-link {
+    color: var(--gray-400);
+    font-size: 0.875rem;
+}
+
+.footer-link:hover {
+    color: var(--white);
+    text-decoration: underline;
+}
+
+.shipping-box {
+    background-color: var(--gray-100);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    font-size: 0.875rem;
+}
+
+.cta-banner {
+    background-color: var(--electric-orange);
+    color: var(--white);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    margin: var(--spacing-xl) 0;
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: var(--spacing-sm) 0;
+    }
+
+    .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        gap: var(--spacing-md);
+        padding: var(--spacing-lg) 0;
+        margin-top: var(--spacing-md);
+        border-top: 1px solid var(--gray-700);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-link {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+    }
+
+    .menu-toggle {
+        display: block;
+        font-size: 1.5rem;
+        color: var(--white);
+        padding: 0.5rem;
+    }
+
+    .nav-actions {
+        order: -1; /* Keep cart accessible but maybe rearranged */
+    }
+
+    .grid-products {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: var(--spacing-md);
+    }
+
+    .hero h1 {
+        font-size: 2rem !important;
+    }
+}
+
+.menu-toggle {
+    display: none;
+}

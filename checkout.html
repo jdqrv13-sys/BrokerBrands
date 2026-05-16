@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Broker Brands</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: var(--spacing-2xl);
+            align-items: flex-start;
+        }
+        
+        .checkout-form {
+            background: white;
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--gray-200);
+        }
+        
+        .form-section { margin-bottom: var(--spacing-xl); }
+        .form-section-title { font-size: 1.125rem; margin-bottom: var(--spacing-md); border-bottom: 1px solid var(--gray-100); padding-bottom: 0.5rem; }
+        
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); }
+        
+        .order-summary {
+            background-color: var(--navy);
+            color: var(--white);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            position: sticky;
+            top: 100px;
+        }
+        
+        .summary-item { display: flex; justify-content: space-between; margin-bottom: var(--spacing-md); font-size: 0.875rem; color: var(--gray-300); }
+        .summary-total { border-top: 1px solid var(--gray-700); padding-top: var(--spacing-md); margin-top: var(--spacing-md); font-size: 1.5rem; color: var(--white); font-weight: 700; }
+        
+        .shipping-option {
+            border: 1px solid var(--gray-200);
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: var(--transition-base);
+        }
+        
+        .shipping-option:hover { border-color: var(--electric-orange); }
+        .shipping-option.active { border-color: var(--electric-orange); background: var(--gray-50); box-shadow: var(--shadow-sm); }
+        
+        @media (max-width: 992px) { .checkout-layout { grid-template-columns: 1fr; } .order-summary { position: static; } }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container nav">
+            <a href="index.html" class="logo-link">
+                <img src="assets/logo.jpg" alt="Broker Brands Logo" class="logo-img">
+                <span class="logo-text">BROKER BRANDS</span>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Inicio</a>
+                <a href="catalog.html" class="nav-link">Catálogo</a>
+                <a href="index.html#soluciones" class="nav-link">Soluciones B2B</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="cart.html" class="btn btn-header" style="padding: 0.5rem 1rem;">
+                    <i class="fas fa-arrow-left"></i> Volver al Carrito
+                </a>
+                <button class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="container">
+            <h1 style="margin-bottom: var(--spacing-xl);">Finalizar Pedido Corporativo</h1>
+            
+            <div class="checkout-layout">
+                <!-- Form Section -->
+                <form id="checkout-form" class="checkout-form">
+                    <div class="form-section">
+                        <h3 class="form-section-title">Información de Contacto</h3>
+                        <div class="input-grid">
+                            <div class="input-group">
+                                <label style="display:block; margin-bottom: 0.5rem; font-size: 0.875rem;">Nombre Completo *</label>
+                                <input type="text" id="cust-name" class="input" required placeholder="Ej. Juan Pérez">
+                            </div>
+                            <div class="input-group">
+                                <label style="display:block; margin-bottom: 0.5rem; font-size: 0.875rem;">Empresa / Razón Social</label>
+                                <input type="text" id="cust-company" class="input" placeholder="Broker Brands C.A.">
+                            </div>
+                        </div>
+                        <div class="input-grid" style="margin-top: 1rem;">
+                            <div class="input-group">
+                                <label style="display:block; margin-bottom: 0.5rem; font-size: 0.875rem;">WhatsApp / Teléfono *</label>
+                                <input type="tel" id="cust-phone" class="input" required placeholder="+58 4XX XXXXXXX">
+                            </div>
+                            <div class="input-group">
+                                <label style="display:block; margin-bottom: 0.5rem; font-size: 0.875rem;">Correo Electrónico *</label>
+                                <input type="email" id="cust-email" class="input" required placeholder="usuario@gmail.com">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3 class="form-section-title">Destino de Entrega</h3>
+                        <div class="shipping-option active" onclick="setShipping('local', 5)">
+                            <input type="radio" name="shipping" value="local" checked>
+                            <div style="flex:1;">
+                                <strong>Zona A (Caracas)</strong>
+                                <p style="font-size: 0.75rem; color: var(--gray-500);">Delivery Express mismo día - Tarifa Plana Standard</p>
+                            </div>
+                            <span style="font-weight: 700;">$5.00</span>
+                        </div>
+                        <div class="shipping-option" onclick="setShipping('national', 10)">
+                            <input type="radio" name="shipping" value="national">
+                            <div style="flex:1;">
+                                <strong>Zona B (Resto de Venezuela)</strong>
+                                <p style="font-size: 0.75rem; color: var(--gray-500);">Envío Nacional vía Zoom, Tealca o MRW (Cobro a destino/prepagado)</p>
+                            </div>
+                            <span style="font-weight: 700;">$10.00</span>
+                        </div>
+                        
+                        <div style="margin-top: 1.5rem;">
+                            <label style="display:block; margin-bottom: 0.5rem; font-size: 0.875rem;">Dirección Exacta de Envío *</label>
+                            <textarea id="cust-address" class="input" required style="min-height: 100px;" placeholder="Ej. Av. Francisco de Miranda, Edificios XYZ, Piso 4, Oficina 402..."></textarea>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Sidebar Summary -->
+                <aside class="order-summary">
+                    <h3 style="margin-bottom: var(--spacing-lg); color: var(--white);">Resumen del Pedido</h3>
+                    <div id="summary-items-list" style="margin-bottom: var(--spacing-xl); max-height: 300px; overflow-y: auto; padding-right: 0.5rem;">
+                        <!-- Items will be previewed here -->
+                    </div>
+                    
+                    <div class="summary-item">
+                        <span>Subtotal (Productos)</span>
+                        <span id="summ-subtotal">$0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Costo de Envío</span>
+                        <span id="summ-shipping">$5.00</span>
+                    </div>
+                    
+                    <div class="summary-item summary-total">
+                        <span>Total Total</span>
+                        <span id="summ-total">$0.00</span>
+                    </div>
+                    
+                    <button type="submit" form="checkout-form" class="btn btn-cta" style="width: 100%; margin-top: var(--spacing-xl); background: var(--electric-orange);">
+                        <i class="fab fa-whatsapp"></i> Enviar Pedido a WhatsApp
+                    </button>
+                    <p style="text-align: center; font-size: 0.7rem; color: var(--gray-400); margin-top: 1rem;">
+                        Al hacer clic, se abrirá un chat de WhatsApp con el detalle estructurado de su compra para coordinar pago y entrega.
+                    </p>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div style="text-align: center; color: var(--gray-500); font-size: 0.75rem;">
+                &copy; 2026 Broker Brands C.A. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/checkout.js"></script>
+</body>
+</html>
