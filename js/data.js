@@ -8,8 +8,10 @@ async function loadProducts() {
             .select('*')
             .order('created_at', { ascending: false });
 
-        if (error) throw error;
-        PRODUCTS = data || [];
+        PRODUCTS = (data || []).map(p => ({
+            ...p,
+            price: Number(p.price)
+        }));
         return PRODUCTS;
     } catch (err) {
         console.error('Error cargando productos de Supabase:', err);
